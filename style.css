@@ -1,0 +1,43 @@
+body {
+    font-family: FreeMono, monospace;
+    margin: 0px;
+    padding: 0px;
+}
+
+div#page-title {
+    position: relative;
+    text-align: center;
+    background-color: #ff0000;
+    height: 75px;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    padding-top: 0px;
+    outline: 3px solid #000;
+}
+
+#page-title h1 {
+    padding: 0px;
+    margin: 0px;
+    color: #ffffff;
+    position: relative;
+    top: 25%;
+}
+
+div.navigation a {
+    display: block;
+    position: relative;
+    float: left;
+    width: 20%;
+    height: 20px;
+    text-align: center;
+    margin-left: auto;
+    margin-top: auto;
+    background: #b3b3b3;
+    outline: 3px solid #000; 
+}
+
+.content {
+    margin-left: 8px;
+    margin-right: 8px;
+}
