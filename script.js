@@ -27,22 +27,17 @@ function getElementWithParentIdAndClassName(id, className) {
     return document.querySelector(`#${id} .${className}`);
 }
 
-// listen for clicks on buttons to expand/contract content.
-document.addEventListener('pointerdown', function(event) {
-    const button = event.srcElement; // button that was pressed
-    const id = event.path[1].id;
-    if (button.className === 'content-expand') {
-        makeSectionVisible(getElementWithParentIdAndClassName(id, 'project-info'));
-        makeButtonContractContent(button);
-    }
-    else if (button.className === 'content-contract') {
-        makeSectionInvisible(getElementWithParentIdAndClassName(id, 'project-info'));
-        makeButtonExpandContent(button);
-    }
-});
+const section = document.getElementById("projects");
+
 
 // listen for clicks on buttons to expand/contract content.
-document.addEventListener('touchstart', function(event) {
+section.addEventListener('pointerdown', buttonExpandOrContractHandler);
+
+// listen for touch on buttons to expand/contract content.
+section.addEventListener('touchstart', buttonExpandOrContractHandler);
+
+// handle a button expand/contract event.
+function buttonExpandOrContractHandler(event) {
     const button = event.srcElement; // button that was pressed
     const id = event.path[1].id;
     if (button.className === 'content-expand') {
@@ -53,7 +48,7 @@ document.addEventListener('touchstart', function(event) {
         makeSectionInvisible(getElementWithParentIdAndClassName(id, 'project-info'));
         makeButtonExpandContent(button);
     }
-});
+}
 
 // update the age element in the about me section
 function updateAge() {
