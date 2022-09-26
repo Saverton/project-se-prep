@@ -28,7 +28,7 @@ function getElementWithParentIdAndClassName(id, className) {
 }
 
 // listen for clicks on buttons to expand/contract content.
-document.addEventListener('click', function(event) {
+document.addEventListener('pointerdown', function(event) {
     const button = event.srcElement; // button that was pressed
     const id = event.path[1].id;
     if (button.className === 'content-expand') {
