@@ -40,3 +40,28 @@ document.addEventListener('click', function(event) {
         makeButtonExpandContent(button);
     }
 });
+
+// update the age element in the about me section
+function updateAge() {
+    const ageElement = document.getElementById("age");
+    const dob = document.getElementById("dob").textContent;
+    const date = parseInt(dob.substring(0, 2), 10);
+    const month = parseInt(dob.substring(3, 5), 10);
+    const year = parseInt(dob.substring(6, dob.length));
+    ageElement.textContent = `${getYearDifference(date, month, year)}`;
+}
+
+// return the difference in years between a given day, month, and year and today's date
+function getYearDifference(date, month, year) {
+    const today = new Date();
+    let difference = today.getFullYear() - year;
+    if (month > (today.getMonth() + 1)) {
+        difference--;
+    }
+    else if (month === (today.getMonth() + 1) && date < today.getDate()) {
+        difference--;
+    }
+    return difference;
+}
+
+updateAge(); // updates my age when loading the page
