@@ -41,6 +41,20 @@ document.addEventListener('pointerdown', function(event) {
     }
 });
 
+// listen for clicks on buttons to expand/contract content.
+document.addEventListener('touchstart', function(event) {
+    const button = event.srcElement; // button that was pressed
+    const id = event.path[1].id;
+    if (button.className === 'content-expand') {
+        makeSectionVisible(getElementWithParentIdAndClassName(id, 'project-info'));
+        makeButtonContractContent(button);
+    }
+    else if (button.className === 'content-contract') {
+        makeSectionInvisible(getElementWithParentIdAndClassName(id, 'project-info'));
+        makeButtonExpandContent(button);
+    }
+});
+
 // update the age element in the about me section
 function updateAge() {
     const ageElement = document.getElementById("age");
