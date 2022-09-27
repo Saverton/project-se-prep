@@ -1,51 +1,41 @@
-// given an element, make it visible
-function makeSectionVisible(element) {
-    element.style.display = "block";
-}
-
-// given an element, make it invisible
-function makeSectionInvisible(element) {
-    element.style.display = "none";
-}
-
 // change a given contract button into an expand button
 function makeButtonExpandContent(button) {
-    button.classList.remove("content-contract");
-    button.classList.add("content-expand");
+    button.classList.replace("hide", "show");
     button.textContent = "see more!";
 }
 
 // change a given expand button into a contract button
 function makeButtonContractContent(button) {
-    button.classList.remove("content-expand");
-    button.classList.add("content-contract");
+    button.classList.replace("show", "hide");
     button.textContent = "see less!";
 }
 
-// return an element that contains a parent with a specific id and a specific className
-function getElementWithParentIdAndClassName(id, className) {
-    return document.querySelector(`#${id} .${className}`);
-}
+window.addEventListener('DOMContentLoaded', function(event) {
+    const buttonList = document.querySelectorAll("li.project button");
+    alert("Dom content loaded");
 
-const section = document.getElementById("projects");
-
+    for (let i = 0; i < buttonList.length; i++) {
+        buttonList[i].addEventListener("click", buttonExpandOrContractHandler);
+    }
+})
 
 // listen for clicks on buttons to expand/contract content.
-section.addEventListener('pointerdown', buttonExpandOrContractHandler);
+//section.addEventListener('click', buttonExpandOrContractHandler);
 
 // listen for touch on buttons to expand/contract content.
-section.addEventListener('touchstart', buttonExpandOrContractHandler);
+//section.addEventListener('touchstart', buttonExpandOrContractHandler);
 
 // handle a button expand/contract event.
 function buttonExpandOrContractHandler(event) {
+    //alert("Button Pressed")
     const button = event.srcElement; // button that was pressed
-    const id = event.path[1].id;
-    if (button.className === 'content-expand') {
-        makeSectionVisible(getElementWithParentIdAndClassName(id, 'project-info'));
+    const id = event.composedPath()[1].id;
+    const infoSection = document.querySelector(`#${id} .project-info`);
+    infoSection.classList.toggle("hidden"); // toggle if it's hidden
+    if (button.className === "show") {
         makeButtonContractContent(button);
     }
-    else if (button.className === 'content-contract') {
-        makeSectionInvisible(getElementWithParentIdAndClassName(id, 'project-info'));
+    else if (button.className === "hide") {
         makeButtonExpandContent(button);
     }
 }
