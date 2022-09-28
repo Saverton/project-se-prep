@@ -12,22 +12,13 @@ function makeButtonContractContent(button) {
 
 window.addEventListener('DOMContentLoaded', function(event) {
     const buttonList = document.querySelectorAll("li.project button");
-    alert("Dom content loaded");
-
     for (let i = 0; i < buttonList.length; i++) {
         buttonList[i].addEventListener("click", buttonExpandOrContractHandler);
     }
 })
 
-// listen for clicks on buttons to expand/contract content.
-//section.addEventListener('click', buttonExpandOrContractHandler);
-
-// listen for touch on buttons to expand/contract content.
-//section.addEventListener('touchstart', buttonExpandOrContractHandler);
-
 // handle a button expand/contract event.
 function buttonExpandOrContractHandler(event) {
-    //alert("Button Pressed")
     const button = event.srcElement; // button that was pressed
     const id = event.composedPath()[1].id;
     const infoSection = document.querySelector(`#${id} .project-info`);
