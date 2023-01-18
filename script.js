@@ -1,26 +1,21 @@
+import projects from './projects.js';
+
 // change a given contract button into an expand button
 function makeButtonExpandContent(button) {
     button.classList.replace("hide", "show");
-    button.textContent = "see more!";
+    button.textContent = "HIDE";
 }
 
 // change a given expand button into a contract button
 function makeButtonContractContent(button) {
     button.classList.replace("show", "hide");
-    button.textContent = "see less!";
+    button.textContent = "EXPAND";
 }
-
-window.addEventListener('DOMContentLoaded', function(event) {
-    const buttonList = document.querySelectorAll("li.project button");
-    for (let i = 0; i < buttonList.length; i++) {
-        buttonList[i].addEventListener("click", buttonExpandOrContractHandler);
-    }
-})
 
 // handle a button expand/contract event.
 function buttonExpandOrContractHandler(event) {
-    const button = event.srcElement; // button that was pressed
-    const id = event.composedPath()[1].id;
+    const button = event.target; // button that was pressed
+    const id = `prj-${button.id}`;
     const infoSection = document.querySelector(`#${id} .project-info`);
     infoSection.classList.toggle("hidden"); // toggle if it's hidden
     if (button.className === "show") {
@@ -54,4 +49,73 @@ function getYearDifference(date, month, year) {
     return difference;
 }
 
+// renders all projects from projects list in ./projects.js
+function renderProjects() {
+    const projectSection = document.querySelector('#projects .section-content');
+    projects.forEach((prj, idx) => {
+        projectSection.append(renderProject(prj, idx));
+    });
+}
+
+// renders a project as a section element given the project object.
+function renderProject(project, index) {
+    const section = document.createElement('section');
+    section.className = 'project';
+    section.id = `prj-${index}`;
+
+    const h3 = document.createElement('h3');
+    h3.textContent = project.name;
+
+    const button = document.createElement('button');
+    button.className = 'hide';
+    button.id = index;
+    button.textContent = 'EXPAND';
+
+    const div = document.createElement('div');
+    div.className = 'project-info hidden';
+
+    const img = document.createElement('img');
+    img.src = project.imgUrl;
+    img.alt = img.title = project.name;
+    
+    const p = document.createElement('p');
+    p.textContent = project.desc;
+
+    const gitDiv = document.createElement('div');
+
+    const githubLink = document.createElement('a');
+    githubLink.href = project.github
+    githubLink.target = '_blank';
+    githubLink.textContent = 'Github';
+
+    gitDiv.append(githubLink);
+
+    div.append(img, p, gitDiv);
+
+    if (project.youtube) {
+        const ytDiv = document.createElement('div');
+
+        const youtubeLink = document.createElement('a');
+        youtubeLink.href = project.youtube
+        youtubeLink.target = '_blank';
+        youtubeLink.textContent = 'Youtube';
+
+        ytDiv.append(youtubeLink);
+
+        div.appendChild(ytDiv);
+    }
+
+    section.append(h3, button, div);
+
+    return section;
+}
+
 updateAge(); // updates my age when loading the page
+renderProjects(); // renders the list of projects in the project section
+
+window.addEventListener('DOMContentLoaded', function(event) {
+    const buttonList = document.querySelectorAll(".project button");
+    for (let i = 0; i < buttonList.length; i++) {
+        buttonList[i].addEventListener("click", buttonExpandOrContractHandler);
+    }
+})
